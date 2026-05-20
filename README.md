@@ -39,23 +39,3 @@ pip install torch torchaudio speechbrain matplotlib
 
 
 
-
-# Initialize processor
-processor = ProfessionalAudioProcessor()
-
-# Extract features
-features = processor.extract_features("audio.wav")
-
-# Load speaker embedding model
-from speechbrain.pretrained import EncoderClassifier
-classifier = EncoderClassifier.from_hparams(
-    source="speechbrain/spkrec-ecapa-voxceleb"
-)
-
-# Extract embeddings
-embedding = extract_speaker_embedding("audio.wav", classifier)
-
-# Verify speakers
-emb1 = extract_speaker_embedding("speaker1.wav", classifier)
-emb2 = extract_speaker_embedding("speaker2.wav", classifier)
-similarity = torch.nn.functional.cosine_similarity(emb1, emb2, dim=0)
